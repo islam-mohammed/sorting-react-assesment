@@ -41,7 +41,7 @@ function Table({sortBy}) {
           if (sortBy === 'name') {
             return a.name > p.name ? 1: -1
           } else if(sortBy === 'age') {
-            return a.birth > p.birth ? 1: -1
+            return new Date(a.birth) > new Date(p.birth) ? 1: -1
           } 
         })
       setPeople(newArr)
