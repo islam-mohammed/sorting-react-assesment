@@ -1,7 +1,7 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 
-function Table() {
-  const people = [
+function Table({sortBy}) {
+  const [people, setPeople] = useState([
     {
       name: "Rhianna Johnson",
       birth: "11/30/2011",
@@ -34,7 +34,20 @@ function Table() {
       name: "Eliza Baxter",
       birth: "10/31/1999",
     },
-  ]
+  ]) 
+
+  useEffect(() => {
+    setPeople((oldPeople) => {
+      const people = [...oldPeople].sort((a, p) => {
+        if (sortBy === 'name') {
+          return a.name > p.name
+        } else if(sortBy === 'age') {
+          return a.birth > p.birth
+        } 
+      })
+    })
+  }, [sortBy])
+  
 
   return (
     <div className="table-div">
@@ -47,10 +60,12 @@ function Table() {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td />
-              <td />
-            </tr>
+            {people.map(person => <tr key={person.name}>
+              <td>{person.name}</td>
+              <td>{person.birth}</td>
+
+            </tr>)}
+          
           </tbody>
         </table>
       </div>
