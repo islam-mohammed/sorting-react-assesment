@@ -35,17 +35,17 @@ function Table({sortBy}) {
       birth: "10/31/1999",
     },
   ]) 
-
   useEffect(() => {
-    setPeople((oldPeople) => {
-      const people = [...oldPeople].sort((a, p) => {
-        if (sortBy === 'name') {
-          return a.name > p.name
-        } else if(sortBy === 'age') {
-          return a.birth > p.birth
-        } 
-      })
-    })
+    if (sortBy) {
+      const newArr = [...people].sort((a, p) => {
+          if (sortBy === 'name') {
+            return a.name > p.name ? 1: -1
+          } else if(sortBy === 'age') {
+            return a.birth > p.birth ? 1: -1
+          } 
+        })
+      setPeople(newArr)
+    }
   }, [sortBy])
   
 
@@ -60,12 +60,10 @@ function Table({sortBy}) {
             </tr>
           </thead>
           <tbody>
-            {people.map(person => <tr key={person.name}>
+            {people && people.map(person => <tr key={person.name}>
               <td>{person.name}</td>
               <td>{person.birth}</td>
-
             </tr>)}
-          
           </tbody>
         </table>
       </div>
